@@ -79,6 +79,12 @@ def tapbasic(referrer):
         return api_error("Unknown referrer: %s" % referrer)
     referrer_percent = account.get("referrer_percent", config.referrer_percent)
 
+    # Proxy
+    proxy_account = None
+    allow_proxy = account.get("allow_proxy", True)
+    if allow_proxy:
+        proxy_account = config.get("proxy", None)
+
     # Create new account
     try:
         bitshares.create_account(
@@ -89,7 +95,7 @@ def tapbasic(referrer):
             owner_key=account["owner_key"],
             active_key=account["active_key"],
             memo_key=account["memo_key"],
-            proxy_account=config.get("proxy", None),
+            proxy_account=proxy_account,
             additional_owner_accounts=config.get("additional_owner_accounts", []),
             additional_active_accounts=config.get("additional_active_accounts", []),
             additional_owner_keys=config.get("additional_owner_keys", []),
