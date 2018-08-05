@@ -9,6 +9,6 @@ RUN pip install uwsgi
 COPY . .
 RUN python manage.py install
 
-EXPOSE 9090
+EXPOSE 5000
 
-CMD [ "uwsgi", "--ini", "wsgi.ini" ]
+CMD [ "python", "manage.py", "runserver", "--host", "0.0.0.0" ]
